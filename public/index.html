@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason's Station</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <p>This is a simple HTML page served by Express.</p>
+    <nav id="status">
+    </nav>
+    <div id="login-section" hidden>
+        <h2>Login</h2>
+        <form id="login-form" action="/login" method="post">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required>
+            <label><input type="checkbox" name="rememberMe" /> Remember me</label>
+            <button type="submit">Log in</button>
+        </form>
+        <p id="login-message" role="status"></p>
+    </div>
+
+    <img src="//media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTNoY3oyaGEwMGQ2cTB0Y3Voa2N4MjV6ZWJ2ZXNwMWZ3eGM5aHU1OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cCmGP39xiRCHKUPGbE/200.webp"
+        alt="Yeat">
+    <nav>
+        <a href="/">Home</a>
+        <a href="/projects">Projects</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/guestbook">Guestbook</a>
+        <a href="/space">Space</a>
+    </nav>
+
+    <button id="logout-button" type="button" hidden>Log out</button>
+
+    <script src="/js/chapa.js"></script>
+</body>
+
+
+
+</html>

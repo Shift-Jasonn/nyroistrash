@@ -1,0 +1,26 @@
+[
+  {
+    "id": "090310a0-8be1-4710-9a40-19f7ec3e9ded",
+    "name": "Jason",
+    "msg": "yo",
+    "createdAt": "2026-10-06T13:25:27.476Z"
+  },
+  {
+    "id": "7de547dc-c6d2-4a8e-a034-1b6d26ec709f",
+    "name": "yo",
+    "msg": "`<b>Am I bold?</b>`",
+    "createdAt": "2026-10-06T13:25:54.590Z"
+  },
+  {
+    "id": "01f7c3fd-55cd-4f98-bbda-f1e6962d37cb",
+    "name": "Jason",
+    "msg": "yo",
+    "createdAt": "2026-10-06T13:28:12.750Z"
+  },
+  {
+    "id": "a1ae8e51-cd11-4bf0-9c10-6f61959ddbc3",
+    "name": "Jason",
+    "msg": "hola",
+    "createdAt": "2026-10-06T13:29:36.015Z"
+  }
+]
