@@ -11,8 +11,9 @@
 <body>
 
     <p>This is a simple HTML page served by Express.</p>
-    <nav id="status">
-    </nav>
+
+    <nav id="status"></nav>
+
     <div id="login-section" hidden>
         <h2>Login</h2>
         <form id="login-form" action="/login" method="post">
@@ -24,21 +25,22 @@
         <p id="login-message" role="status"></p>
     </div>
 
-    <img src="//media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTNoY3oyaGEwMGQ2cTB0Y3Voa2N4MjV6ZWJ2ZXNwMWZ3eGM5aHU1OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cCmGP39xiRCHKUPGbE/200.webp"
-        alt="Yeat">
-    <nav>
-        <a href="/">Home</a>
-        <a href="/projects">Projects</a>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/guestbook">Guestbook</a>
-        <a href="/space">Space</a>
-    </nav>
+    <div id="home-content" hidden>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ODNjbGRvejM3bTdncDFiYWk0M2hrYmpkMGs5NXVpeTM1NHg5czRjbyZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/OnacEQ2GZFZUJfxDSI/200.webp"
+            alt="Yeat">
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/projects">Projects</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/guestbook">Guestbook</a>
+            <a href="/space">Space</a>
+        </nav>
+    </div>
 
     <button id="logout-button" type="button" hidden>Log out</button>
 
     <script src="/js/chapa.js"></script>
 </body>
-
-
 
 </html>

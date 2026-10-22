@@ -1,9 +1,8 @@
 const loginForm = document.querySelector('#login-form');
 const loginMessage = document.querySelector('#login-message');
-
-
 const status = document.querySelector('#status');
 const loginSection = document.querySelector('#login-section');
+const homeContent = document.querySelector('#home-content');
 const logoutButton = document.querySelector('#logout-button');
 
 async function checkAuthState() {
@@ -12,17 +11,20 @@ async function checkAuthState() {
         const data = await response.json();
 
         if (data.loggedIn) {
-            status.innerHTML = '<h1>Welcome back!</h1></a>';
+            status.innerHTML = '<h1>Welcome back!</h1>';
             loginSection.hidden = true;
+            homeContent.hidden = false;
             logoutButton.hidden = false;
         } else {
             status.innerHTML = '<h1>Welcome!</h1>';
             loginSection.hidden = false;
+            homeContent.hidden = true;
             logoutButton.hidden = true;
         }
     } catch (error) {
         status.innerHTML = '<h1>Welcome!</h1>';
         loginSection.hidden = false;
+        homeContent.hidden = true;
         logoutButton.hidden = true;
     }
 }
@@ -57,8 +59,10 @@ logoutButton.addEventListener('click', async () => {
     });
 
     const data = await response.json().catch(() => ({ success: false }));
+
     if (data.success) {
         window.location.href = '/';
     }
 });
+
 checkAuthState();
