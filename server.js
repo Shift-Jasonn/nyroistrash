@@ -6,8 +6,8 @@ const rateLimit = require('express-rate-limit');
 const { Filter } = require('bad-words');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const helmet = require('helmet');
+const db = require('./db');
 
 const apodCache = new Map();
 const TODAY_MAX_AGE = 60 * 60 * 1000;
@@ -46,13 +46,6 @@ let MAINTENANCE_MODE = false;
 if (fs.existsSync(LOG_FILE) && fs.statSync(LOG_FILE).size > 128 * 128) {
     const recentLines = fs.readFileSync(LOG_FILE, 'utf8').split('\n').slice(-10);
     fs.writeFileSync(LOG_FILE, recentLines.join('\n'));
-}
-
-const GUESTBOOK_FILE = path.join(__dirname, 'guestbook.json');
-
-function getGuestbookMessages() {
-    if (!fs.existsSync(GUESTBOOK_FILE)) return [];
-    return JSON.parse(fs.readFileSync(GUESTBOOK_FILE, 'utf8'));
 }
 
 function validateEntry(name, msg) {
@@ -255,9 +248,12 @@ app.get('/guestbook', requireAuth, (req, res, next) => {
     });
 });
 
-app.get('/api/guestbook', requireAuth, (req, res, next) => {
+// READ ALL GUESTBOOK ENTRIES
+
+app.get('/api/guestbook', requireAuth, async (req, res, next) => {
     try {
-        res.json(getGuestbookMessages());
+        const entries = await db.getAllEntries();
+        res.json(entries);
     } catch (err) {
         next(err);
     }
@@ -370,9 +366,9 @@ app.get('/api/space', async (req, res, next) => {
     }
 });
 
-// GUESTBOOK
+// GUESTBOOK: CREATE
 
-app.post('/api/guestbook', requireAuth, (req, res, next) => {
+app.post('/api/guestbook', requireAuth, async (req, res, next) => {
     try {
         const { name, msg } = req.body;
         const error = validateEntry(name, msg);
@@ -389,22 +385,78 @@ app.post('/api/guestbook', requireAuth, (req, res, next) => {
             });
         }
 
-        const entry = {
-            id: crypto.randomUUID(),
+        const entry = await db.addEntry({
             name: name.trim(),
-            msg: cleanedInput,
-            createdAt: new Date().toISOString()
-        };
-
-        const messages = getGuestbookMessages();
-        messages.push(entry);
-
-        fs.writeFileSync(
-            GUESTBOOK_FILE,
-            JSON.stringify(messages.slice(-50), null, 2)
-        );
+            msg: cleanedInput
+        });
 
         res.status(201).json(entry);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GUESTBOOK: READ ONE
+
+app.get('/api/guestbook/:id', requireAuth, async (req, res, next) => {
+    try {
+        const entry = await db.getEntryById(req.params.id);
+
+        if (!entry) {
+            return res.status(404).json({ error: 'Entry not found.' });
+        }
+
+        res.json(entry);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GUESTBOOK: UPDATE
+
+app.put('/api/guestbook/:id', requireAuth, async (req, res, next) => {
+    try {
+        const { name, msg } = req.body;
+        const error = validateEntry(name, msg);
+
+        if (error) {
+            return res.status(400).json({ error });
+        }
+
+        const cleanedInput = msg.replace(/\s+/g, ' ').trim();
+
+        if (filter.isProfane(cleanedInput.replace(/\s/g, ''))) {
+            return res.status(400).json({
+                error: 'Profanity is not allowed.'
+            });
+        }
+
+        const updated = await db.updateEntry(req.params.id, {
+            name: name.trim(),
+            msg: cleanedInput
+        });
+
+        if (!updated) {
+            return res.status(404).json({ error: 'Entry not found.' });
+        }
+
+        res.json(updated);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GUESTBOOK: DELETE
+
+app.delete('/api/guestbook/:id', requireAuth, async (req, res, next) => {
+    try {
+        const deleted = await db.deleteEntry(req.params.id);
+
+        if (!deleted) {
+            return res.status(404).json({ error: 'Entry not found.' });
+        }
+
+        res.status(204).end();
     } catch (err) {
         next(err);
     }

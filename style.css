@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% 40%, #252525 0%, #0b0b0b 40%, #000 80%);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+    padding: 80px 20px;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+h1 {
+    position: relative;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(60px, 10vw, 120px);
+    text-transform: uppercase;
+    letter-spacing: -3px;
+    line-height: .9;
+    margin-bottom: 25px;
+    text-shadow: 5px 5px 0 #111, 0 0 30px rgba(255, 255, 255, .12);
+}
+
+p {
+    position: relative;
+    color: #888;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+}
+
+nav {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 35px;
+}
+
+nav a {
+    color: #888;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 13px 18px;
+    background: #090909;
+    border: 1px solid #333;
+    transition: .25s ease;
+}
+
+nav a:hover {
+    color: #fff;
+    border-color: #777;
+    background: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, .08);
+}
+
+/* Guestbook */
+
+form {
+    position: relative;
+    width: min(700px, 95%);
+    margin: 0 auto 40px;
+    padding: 30px;
+    background: #090909;
+    border: 1px solid #333;
+    box-shadow:
+        0 0 0 1px #111,
+        0 20px 60px rgba(0, 0, 0, .8);
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 15px 16px;
+    margin-bottom: 15px;
+    background: #050505;
+    color: #fff;
+    border: 1px solid #333;
+    outline: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    transition: .25s ease;
+}
+
+form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #777;
+    background: #0b0b0b;
+    box-shadow: 0 0 15px rgba(255, 255, 255, .05);
+}
+
+form button {
+    width: 100%;
+    padding: 15px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #444;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+form button:hover {
+    background: #1a1a1a;
+    border-color: #888;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, .08);
+}
+
+#guestbookMessages {
+    position: relative;
+    width: min(700px, 95%);
+    margin: 0 auto;
+    text-align: left;
+}
+
+#guestbookMessages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#guestbookMessages li {
+    position: relative;
+    padding: 18px 22px;
+    background: #0b0b0b;
+    border: 1px solid #333;
+    border-radius: 14px;
+    color: #ddd;
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: break-word;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .45),
+        inset 0 0 20px rgba(255, 255, 255, .015);
+    transition: .25s ease;
+}
+
+#guestbookMessages li:hover {
+    background: #101010;
+    border-color: #555;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, .6),
+        0 0 15px rgba(255, 255, 255, .04);
+}
+
+#guestbookMessages li strong {
+    display: block;
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+#guestbookMessages li small {
+    display: block;
+    color: #666;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+#guestbookMessages li p {
+    margin: 0;
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+h3 {
+    position: relative;
+    display: inline-block;
+    padding: 20px 35px;
+    background: #090909;
+    border: 1px solid #333;
+    color: #777;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+h3 span {
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    margin-left: 10px;
+    letter-spacing: 1px;
+}
+
+/* Light Mode */
+
+body.light-mode {
+    background: #fff;
+    color: #111;
+}
+
+body.dark-mode {
+    background:
+        radial-gradient(circle at 50% 40%, #252525 0%, #0b0b0b 40%, #000 80%);
+    color: #fff;
+}
+
+body.light-mode nav a,
+body.light-mode h3,
+body.light-mode form,
+body.light-mode #guestbookMessages li {
+    background: #f5f5f5;
+    border-color: #ccc;
+    color: #555;
+}
+
+body.light-mode nav a:hover {
+    background: #e8e8e8;
+    color: #000;
+}
+
+body.light-mode h3 span {
+    color: #111;
+}
+
+body.light-mode form input,
+body.light-mode form textarea {
+    background: #fff;
+    color: #111;
+    border-color: #ccc;
+}
+
+body.light-mode form input::placeholder,
+body.light-mode form textarea::placeholder {
+    color: #888;
+}
+
+body.light-mode form button {
+    background: #eee;
+    color: #111;
+    border-color: #bbb;
+}
+
+body.light-mode #guestbookMessages li:hover {
+    background: #eee;
+    color: #111;
+}
+
+img {
+    position: relative;
+    display: block;
+    width: min(550px, 90%);
+    margin: 0 auto 35px;
+    border: 1px solid #333;
+    padding: 8px;
+    background: #080808;
+    box-shadow:
+        0 0 0 1px #111,
+        0 20px 60px rgba(0, 0, 0, .8);
+    filter: grayscale(15%) contrast(1.15);
+    transition: .3s ease;
+}
+
+img:hover {
+    transform: scale(1.02);
+    border-color: #666;
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, .08),
+        0 25px 70px rgba(0, 0, 0, .9);
+}
