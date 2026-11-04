@@ -3,11 +3,12 @@ const path = require('path');
 const crypto = require('crypto');
 
 const GUESTBOOK_FILE = path.join(__dirname, 'guestbook.json');
+const USERS_FILE = path.join(__dirname, 'users.json');
 const MAX_ENTRIES = 50;
 
-async function readAll() {
+async function readAll(file = GUESTBOOK_FILE) {
     try {
-        const text = await fs.readFile(GUESTBOOK_FILE, 'utf8');
+        const text = await fs.readFile(file, 'utf8');
         return JSON.parse(text);
     } catch (err) {
         if (err.code === 'ENOENT') return [];
@@ -15,11 +16,8 @@ async function readAll() {
     }
 }
 
-async function writeAll(entries) {
-    await fs.writeFile(
-        GUESTBOOK_FILE,
-        JSON.stringify(entries, null, 2)
-    );
+async function writeAll(data, file = GUESTBOOK_FILE) {
+    await fs.writeFile(file, JSON.stringify(data, null, 2));
 }
 
 async function getAllEntries() {
@@ -77,10 +75,34 @@ async function deleteEntry(id) {
     return true;
 }
 
+async function getUserByUsername(username) {
+    const users = await readAll(USERS_FILE);
+    return users.find(user => user.username === username.toLowerCase()) || null;
+}
+
+async function addUser({ username, passwordHash, role = 'user' }) {
+    const users = await readAll(USERS_FILE);
+
+    const user = {
+        id: crypto.randomUUID(),
+        username: username.toLowerCase(),
+        passwordHash,
+        role,
+        createdAt: new Date().toISOString()
+    };
+
+    users.push(user);
+    await writeAll(users, USERS_FILE);
+
+    return user;
+}
+
 module.exports = {
     getAllEntries,
     getEntryById,
     addEntry,
     updateEntry,
-    deleteEntry
+    deleteEntry,
+    getUserByUsername,
+    addUser
 };

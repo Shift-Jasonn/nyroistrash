@@ -1,0 +1,23 @@
+[
+  {
+    "id": "edc24bb9-a60b-47fb-aab5-6a7aae6f8624",
+    "username": "admin",
+    "passwordHash": "$2b$12$6aLckNC5I1unqlQVyvH/g.Cji/xqL3O1eKLIu.AJzGKSJv6.lWHLK",
+    "role": "admin",
+    "createdAt": "2026-11-04T13:28:29.249Z"
+  },
+  {
+    "id": "8031e569-0b45-4f94-afad-b5fdbce757fd",
+    "username": "fearxnasty",
+    "passwordHash": "$2b$12$nmg4t3lgcSYpV6f.RGgA5u0GEpZYi/0P7ip9ZUstk7mJXNdJRBGdO",
+    "role": "user",
+    "createdAt": "2026-11-04T13:29:03.388Z"
+  },
+  {
+    "id": "5205c5da-4b6e-4840-8474-4b3849070f0e",
+    "username": "ale_bigchops",
+    "passwordHash": "$2b$12$rXCOl1kCi6mEaWqN6nPRzeVHgts17UcH.fJKgnGYtgmqUo6Q7MvVe",
+    "role": "user",
+    "createdAt": "2026-11-04T13:35:02.524Z"
+  }
+]

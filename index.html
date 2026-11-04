@@ -16,13 +16,25 @@
 
     <div id="login-section" hidden>
         <h2>Login</h2>
+
         <form id="login-form" action="/login" method="post">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" minlength="3" maxlength="20"
+                required>
+
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
-            <label><input type="checkbox" name="rememberMe" /> Remember me</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+            <label>
+                <input type="checkbox" name="rememberMe">
+                Remember me
+            </label>
+
             <button type="submit">Log in</button>
         </form>
+
         <p id="login-message" role="status"></p>
+        <p>New here? <a href="/register">Create an account</a></p>
     </div>
 
     <div id="home-content" hidden>

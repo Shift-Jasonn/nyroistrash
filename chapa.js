@@ -11,7 +11,12 @@ async function checkAuthState() {
         const data = await response.json();
 
         if (data.loggedIn) {
-            status.innerHTML = '<h1>Welcome back!</h1>';
+            status.textContent = '';
+
+            const heading = document.createElement('h1');
+            heading.textContent = `Welcome back, ${data.username}!`;
+            status.append(heading);
+
             loginSection.hidden = true;
             homeContent.hidden = false;
             logoutButton.hidden = false;
@@ -31,37 +36,54 @@ async function checkAuthState() {
 
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    loginMessage.textContent = '';
 
+    const username = document.querySelector('#username').value;
     const password = document.querySelector('#password').value;
     const rememberMe = event.target.rememberMe.checked;
 
-    const response = await fetch(loginForm.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, rememberMe })
-    });
+    try {
+        const response = await fetch(loginForm.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password,
+                rememberMe
+            })
+        });
 
-    const data = await response.json().catch(() => ({ success: false }));
+        const data = await response.json().catch(() => ({}));
 
-    if (data.success) {
-        loginMessage.textContent = 'Login successful!';
-        loginForm.reset();
-        await checkAuthState();
-        window.location.href = data.redirect || '/';
-    } else {
-        loginMessage.textContent = data.error || 'Login failed. Please check your password.';
+        if (response.ok && data.success) {
+            loginForm.reset();
+            window.location.href = data.redirect || '/';
+        } else {
+            loginMessage.textContent =
+                data.error || 'Login failed. Please try again.';
+        }
+    } catch (error) {
+        loginMessage.textContent =
+            'Could not reach the server. Check your connection.';
     }
 });
 
 logoutButton.addEventListener('click', async () => {
-    const response = await fetch('/logout', {
-        method: 'POST'
-    });
+    try {
+        const response = await fetch('/logout', {
+            method: 'POST'
+        });
 
-    const data = await response.json().catch(() => ({ success: false }));
+        const data = await response.json().catch(() => ({}));
 
-    if (data.success) {
-        window.location.href = '/';
+        if (response.ok && data.success) {
+            window.location.href = '/';
+        }
+    } catch (error) {
+        loginMessage.textContent =
+            'Could not log out. Please try again.';
     }
 });
 
